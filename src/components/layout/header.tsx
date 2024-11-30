@@ -19,10 +19,10 @@ export default function Example() {
             <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
                 <div className="flex lg:flex-1">
                     <a href="#" className="-m-1.5 p-1.5">
-                        <span className="sr-only">Your Company</span>
+                        <span className="sr-only">Master of Web</span>
                         <img
-                            alt=""
-                            src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                            alt="logo"
+                            src="/logo.svg"
                             className="h-8 w-auto"
                         />
                     </a>
@@ -45,7 +45,7 @@ export default function Example() {
                     ))}
                 </div>
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="#" className="text-sm/6 font-semibold text-white">
+                    <a href="/login" className="text-sm/6 font-semibold text-white">
                         Log in <span aria-hidden="true">&rarr;</span>
                     </a>
                 </div>
@@ -55,10 +55,10 @@ export default function Example() {
                 <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
                     <div className="flex items-center justify-between">
                         <a href="#" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Your Company</span>
+                            <span className="sr-only">Master of Web</span>
                             <img
-                                alt=""
-                                src="https://tailwindui.com/plus/img/logos/mark.svg?color=indigo&shade=500"
+                                alt="logo"
+                                src="/logo.svg"
                                 className="h-8 w-auto"
                             />
                         </a>
@@ -86,7 +86,7 @@ export default function Example() {
                             </div>
                             <div className="py-6">
                                 <a
-                                    href="#"
+                                    href="/login"
                                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800"
                                 >
                                     Log in
