@@ -3,8 +3,11 @@
 import { useState } from 'react'
 import { Dialog, DialogPanel } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import useSession from "../../lib/hooks/useSession.ts";
+import DesktopProfileDropdown from "./desktopProfileDropdown.tsx";
+import MobileSidebar from "./mobileSidebar.tsx";
 
-const navigation = [
+export const navigation = [
     { name: 'About', href: '/about' },
     { name: 'Articles', href: '/articles' },
     { name: 'Roadmap', href: '/roadmap' },
@@ -12,7 +15,8 @@ const navigation = [
     { name: 'Forum', href: '/forum' },
 ]
 
-export default function Example() {
+export default function Header() {
+    const { user, loading } = useSession();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     return (
@@ -45,58 +49,24 @@ export default function Example() {
                         </a>
                     ))}
                 </div>
-                <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="/login" className="text-sm/6 font-semibold text-white">
-                        Log in <span aria-hidden="true">&rarr;</span>
-                    </a>
+                <div className="hidden lg:flex gap-x-12 lg:flex-1 lg:justify-end">
+                    {loading && <div className="text-sm/6 font-semibold text-white">Loading...</div>}
+                    {(!loading && user) && (
+                        <DesktopProfileDropdown user={user} />
+                    )}
+                    {(!loading && !user) && (
+                        <a
+                            href="/login"
+                            className="text-sm/6 font-semibold text-white"
+                        >Log in</a>
+                    )}
                 </div>
             </nav>
-            <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
-                <div className="fixed inset-0 z-10" />
-                <DialogPanel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-gray-900 px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
-                    <div className="flex items-center justify-between">
-                        <a href="/" className="-m-1.5 p-1.5">
-                            <span className="sr-only">Master of Web</span>
-                            <img
-                                alt="logo"
-                                src="/logo.svg"
-                                className="h-8 w-auto"
-                            />
-                        </a>
-                        <button
-                            type="button"
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="-m-2.5 rounded-md p-2.5 text-gray-400"
-                        >
-                            <span className="sr-only">Close menu</span>
-                            <XMarkIcon aria-hidden="true" className="size-6" />
-                        </button>
-                    </div>
-                    <div className="mt-6 flow-root">
-                        <div className="-my-6 divide-y divide-gray-500/25">
-                            <div className="space-y-2 py-6">
-                                {navigation.map((item) => (
-                                    <a
-                                        key={item.name}
-                                        href={item.href}
-                                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-800"
-                                    >
-                                        {item.name}
-                                    </a>
-                                ))}
-                            </div>
-                            <div className="py-6">
-                                <a
-                                    href="/login"
-                                    className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-800"
-                                >
-                                    Log in
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </DialogPanel>
-            </Dialog>
+            <MobileSidebar
+                user={user} loading={loading}
+                mobileMenuOpen={mobileMenuOpen}
+                setMobileMenuOpen={setMobileMenuOpen}
+            />
         </header>
     )
 }

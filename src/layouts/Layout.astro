@@ -13,7 +13,7 @@ import Footer from "../components/layout/footer.astro";
 		<title>Astro Basics</title>
 	</head>
 	<body class="min-h-screen h-full bg-gray-900">
-        <Header />
+        <Header client:load />
 		<slot />
         <Footer />
 	</body>
