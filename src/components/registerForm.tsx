@@ -24,6 +24,8 @@ const RegisterForm: React.FC = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [emailTaken, setEmailTaken] = useState<boolean>(false);
+    const [usernameTaken, setUsernameTaken] = useState<boolean>(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -33,12 +35,57 @@ const RegisterForm: React.FC = () => {
         });
     };
 
+    const validatePassword = (password: string) => {
+        const regex = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+        return regex.test(password);
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError(null);
+        setEmailTaken(false);
+        setUsernameTaken(false);
+
+        // Basic validation
+        if (formData.password !== formData.confirmPassword) {
+            setError("Passwords do not match");
+            setLoading(false);
+            return;
+        }
+
+        if (!validatePassword(formData.password)) {
+            setError("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, and one number.");
+            setLoading(false);
+            return;
+        }
 
         try {
+            // Check if email is unique
+            const { data: emailCheck } = await supabase
+                .from('users')
+                .select('email')
+                .eq('email', formData.email)
+                .single();
+            if (emailCheck) {
+                setEmailTaken(true);
+                setLoading(false);
+                return;
+            }
+
+            // Check if username is unique
+            const { data: usernameCheck } = await supabase
+                .from('users')
+                .select('username')
+                .eq('username', formData.username)
+                .single();
+            if (usernameCheck) {
+                setUsernameTaken(true);
+                setLoading(false);
+                return;
+            }
+
+            // Proceed with signup if no errors
             const { error } = await supabase.auth.signUp({
                 email: formData.email,
                 password: formData.password,
@@ -52,10 +99,11 @@ const RegisterForm: React.FC = () => {
                 }
             });
 
-            if (error)
+            if (error) {
                 setError(error.message);
-            else
+            } else {
                 window.location.href = "/login?message=Please check your email to verify your account.";
+            }
         } catch (err) {
             setLoading(false);
             setError('Something went wrong, please try again later.');
@@ -199,10 +247,13 @@ const RegisterForm: React.FC = () => {
                         <button
                             type="submit"
                             disabled={loading}
-                            className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                            className={`flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 transition-all duration-300 ease-in-out ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                         >
                             {loading ? (
-                                <span className="animate-spin">Loading...</span>
+                                <div className="relative flex justify-center items-center">
+                                    <div className="absolute animate-spin rounded-full h-6 w-6 border-t-2 border-b-2 border-white/50 border-solid"></div>
+                                    <span className="opacity-0">Signing up...</span>
+                                </div>
                             ) : (
                                 'Sign up'
                             )}
