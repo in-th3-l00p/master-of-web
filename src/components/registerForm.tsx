@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { supabase } from "../lib/supabase";
 
 interface FormData {
     firstName: string;
@@ -35,18 +36,26 @@ const RegisterForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError(null);  // Reset previous error
+        setError(null);
 
-        // Simulating API call (replace with actual logic)
         try {
-            // Here you would make your API request
-            console.log('Submitting form data:', formData);
-            // Simulate a successful API response
-            setTimeout(() => {
-                setLoading(false);
-                // You can also handle success feedback here
-                console.log('Account created successfully!');
-            }, 2000);
+            const { error } = await supabase.auth.signUp({
+                email: formData.email,
+                password: formData.password,
+                options: {
+                    data: {
+                        first_name: formData.firstName,
+                        last_name: formData.lastName,
+                        username: formData.username,
+                        country: formData.country,
+                    }
+                }
+            });
+
+            if (error)
+                setError(error.message);
+            else
+                window.location.href = "/login?message=Please check your email to verify your account.";
         } catch (err) {
             setLoading(false);
             setError('Something went wrong, please try again later.');
@@ -63,7 +72,10 @@ const RegisterForm: React.FC = () => {
             </div>
 
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                <form className="space-y-6" onSubmit={handleSubmit}>
+                <form
+                    className="space-y-6"
+                    onSubmit={handleSubmit}
+                >
                     <div>
                         <label htmlFor="first-name" className="block text-sm/6 font-medium text-white">
                             First Name
@@ -205,7 +217,7 @@ const RegisterForm: React.FC = () => {
                 )}
 
                 <p className="mt-10 text-center text-sm/6 text-gray-400">
-                    Already a member?
+                    Already a member?{" "}
                     <a href="/login" className="font-semibold text-indigo-400 hover:text-indigo-300">
                         Sign in
                     </a>
