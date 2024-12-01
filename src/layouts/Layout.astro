@@ -14,7 +14,9 @@ import Footer from "../components/layout/footer.astro";
 	</head>
 	<body class="min-h-screen h-full bg-gray-900">
         <Header client:load />
-		<slot />
+        <main class="min-h-screen">
+            <slot />
+        </main>
         <Footer />
 	</body>
 </html>
