@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { supabase } from "../lib/supabase";
+import { supabase } from "../../lib/supabase.ts";
 
 interface FormData {
     firstName: string;
@@ -24,8 +24,6 @@ const RegisterForm: React.FC = () => {
 
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const [emailTaken, setEmailTaken] = useState<boolean>(false);
-    const [usernameTaken, setUsernameTaken] = useState<boolean>(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -44,10 +42,7 @@ const RegisterForm: React.FC = () => {
         e.preventDefault();
         setLoading(true);
         setError(null);
-        setEmailTaken(false);
-        setUsernameTaken(false);
 
-        // Basic validation
         if (formData.password !== formData.confirmPassword) {
             setError("Passwords do not match");
             setLoading(false);
@@ -61,31 +56,26 @@ const RegisterForm: React.FC = () => {
         }
 
         try {
-            // Check if email is unique
             const { data: emailCheck } = await supabase
                 .from('users')
                 .select('email')
                 .eq('email', formData.email)
                 .single();
             if (emailCheck) {
-                setEmailTaken(true);
                 setLoading(false);
                 return;
             }
 
-            // Check if username is unique
             const { data: usernameCheck } = await supabase
                 .from('users')
                 .select('username')
                 .eq('username', formData.username)
                 .single();
             if (usernameCheck) {
-                setUsernameTaken(true);
                 setLoading(false);
                 return;
             }
 
-            // Proceed with signup if no errors
             const { error } = await supabase.auth.signUp({
                 email: formData.email,
                 password: formData.password,
@@ -102,7 +92,7 @@ const RegisterForm: React.FC = () => {
             if (error) {
                 setError(error.message);
             } else {
-                window.location.href = "/login?message=Please check your email to verify your account.";
+                window.location.href = "/login?registered";
             }
         } catch (err) {
             setLoading(false);
