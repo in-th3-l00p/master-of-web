@@ -1,8 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogPanel } from '@headlessui/react'
-import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars3Icon } from '@heroicons/react/24/outline'
 import useSession from "../../lib/hooks/useSession.ts";
 import DesktopProfileDropdown from "./desktopProfileDropdown.tsx";
 import MobileSidebar from "./mobileSidebar.tsx";
@@ -20,7 +19,7 @@ export default function Header() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     return (
-        <header className="w-full fixed z-10 bg-gray-900 bg-opacity-50">
+        <header className="w-screen fixed z-10 bg-gray-900 bg-opacity-50">
             <nav aria-label="Global" className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8">
                 <div className="flex lg:flex-1">
                     <a href="/" className="-m-1.5 p-1.5">
