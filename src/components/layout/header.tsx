@@ -9,8 +9,8 @@ import MobileSidebar from "./mobileSidebar.tsx";
 export const navigation = [
     { name: 'About', href: '/about' },
     { name: 'Articles', href: '/articles' },
-    { name: 'Roadmap', href: '/roadmap' },
-    { name: 'Courses', href: '/courses' },
+    // { name: 'Roadmap', href: '/roadmap' },
+    // { name: 'Courses', href: '/courses' },
     { name: 'Forum', href: '/forum' },
 ]
 
