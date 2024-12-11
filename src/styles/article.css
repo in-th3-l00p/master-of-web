@@ -1,0 +1,131 @@
+/* Container */
+.article-section {
+    @apply bg-white px-6 py-32 lg:px-8 mx-auto max-w-3xl text-base/7 text-gray-700;
+}
+
+/* Main title (h1) */
+.article-section h1 {
+    @apply mt-2 text-4xl font-semibold tracking-tight text-pretty text-gray-900 sm:text-5xl;
+}
+
+/* Subheadings (h2) */
+.article-section h2 {
+    @apply mt-16 text-3xl font-semibold tracking-tight text-pretty text-gray-900;
+}
+
+/* Additional headers:
+   h3, h4, h5, h6 maintain a visual hierarchy smaller than h2 */
+.article-section h3 {
+    @apply mt-12 text-2xl font-semibold tracking-tight text-pretty text-gray-900;
+}
+
+.article-section h4 {
+    @apply mt-10 text-xl font-semibold tracking-tight text-pretty text-gray-900;
+}
+
+.article-section h5 {
+    @apply mt-8 text-lg font-semibold tracking-tight text-pretty text-gray-900;
+}
+
+.article-section h6 {
+    @apply mt-8 text-base font-semibold tracking-tight text-pretty text-gray-900;
+}
+
+/* General paragraphs */
+.article-section p {
+    @apply mt-6;
+}
+
+/* Lists */
+.article-section ul {
+    @apply mt-8 max-w-xl space-y-8 text-gray-600;
+}
+
+.article-section li {
+    @apply flex gap-x-3;
+}
+
+/* Icons in list items */
+.article-section li svg {
+    @apply mt-1 size-5 flex-none text-cyan-600;
+}
+
+/* Emphasis inside list items */
+.article-section li strong {
+    @apply font-semibold text-gray-900;
+}
+
+/* Pull-quote figure (figure containing blockquote) */
+.article-section figure:has(blockquote) {
+    @apply mt-10 border-l border-cyan-600 pl-9;
+}
+
+.article-section figure:has(blockquote) blockquote {
+    @apply font-semibold text-gray-900;
+}
+
+/* Pull-quote figure caption */
+.article-section figure:has(blockquote) figcaption {
+    @apply mt-6 flex gap-x-4;
+}
+
+.article-section figure:has(blockquote) figcaption img {
+    @apply size-6 flex-none rounded-full bg-gray-50;
+}
+
+.article-section figure:has(blockquote) figcaption div {
+    @apply text-sm/6;
+}
+
+.article-section figure:has(blockquote) figcaption div strong {
+    @apply font-semibold text-gray-900;
+}
+
+/* Image figure (figure containing an illustrative image) */
+.article-section figure {
+    @apply mt-16;
+}
+
+.article-section figure img {
+    @apply aspect-video rounded-xl bg-gray-50 object-cover;
+}
+
+/* Figure caption for image figures - centered and italic */
+.article-section figure figcaption {
+    @apply mt-4 text-sm/6 text-gray-500 text-center italic;
+}
+
+.article-section figure figcaption svg {
+    @apply mt-0.5 size-5 flex-none text-gray-300;
+}
+
+/* Standalone images (not in figure) */
+.article-section > img {
+    @apply aspect-video rounded-xl bg-gray-50 object-cover my-8;
+}
+
+/* Code blocks and inline code:
+   Inline code: small highlight, monospace font
+   Code blocks: preformatted text with overflow and background */
+.article-section code {
+    @apply px-1 py-0.5 bg-gray-100 text-red-600 font-mono rounded;
+}
+
+.article-section pre {
+    @apply mt-8 p-4 overflow-x-auto bg-gray-100 rounded-md;
+}
+
+.article-section pre code {
+    @apply block text-sm font-mono text-gray-800;
+}
+
+/* Horizontal rule */
+.article-section hr {
+    @apply my-8 border-gray-200;
+}
+
+/* Blockquotes outside figures
+   (optional if you want a general blockquote style outside of the pull-quote figure) */
+.article-section blockquote:not(:has(:is(figcaption, figure))) {
+    @apply border-l-4 border-gray-200 pl-4 italic text-gray-800;
+}

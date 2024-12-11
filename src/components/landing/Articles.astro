@@ -1,20 +1,8 @@
 ---
 import Article from "./Article.astro";
-import strapi from "../../lib/strapi";
 import {Article as ArticleType} from "../../lib/types";
-
-const articles = await strapi.find<Article>("articles", {
-    fields: ["title", "slug", "description", "publishedAt"],
-    populate: {
-        author: {
-            fields: ["username", "url", "title"],
-            populate: ["picture"]
-        },
-        article_tags: {
-            fields: ["name", "slug"]
-        }
-    }
-} as any);
+import {ArticleService} from "../../services/articleService";
+const articles = await ArticleService.getAll();
 ---
 <div class="bg-white py-24 sm:py-32" id="articles">
     <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -23,7 +11,10 @@ const articles = await strapi.find<Article>("articles", {
             <p class="mt-2 text-lg/8 text-gray-600">Explore in-depth tutorials, tips, and guides to enhance your web development journey.</p>
             <div class="mt-16 space-y-20 lg:mt-20 lg:space-y-20">
                 {(articles.data as ArticleType[]).map((article) => (
-                    <Article key={article.slug} article={article} />
+                    <Article
+                        key={article.slug}
+                        article={article}
+                    />
                 ))}
             </div>
         </div>

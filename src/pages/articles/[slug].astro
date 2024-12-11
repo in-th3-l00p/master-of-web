@@ -1,0 +1,28 @@
+---
+import strapi from "../../lib/strapi";
+import {StrapiRequestParams} from "strapi-sdk-js";
+import {ArticleService} from "../../services/articleService";
+import Layout from "../../layouts/Layout.astro";
+import "../../styles/article.css";
+import Renderer from "../../components/articles/Renderer";
+
+// getting the slugs of all the articles
+export async function getStaticPaths() {
+    interface SlugArticle {
+        slug: string;
+    }
+
+    const articles = await strapi.find<SlugArticle>("articles", {
+        fields: ["slug"]
+    } as StrapiRequestParams);
+
+    return (articles.data as SlugArticle[])
+        .map(article => ({ params: { slug: article.slug } }));
+}
+
+const article = await ArticleService.get(Astro.params.slug);
+---
+
+<Layout>
+    <Renderer client:load article={article} />
+</Layout>
