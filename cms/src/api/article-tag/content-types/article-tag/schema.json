@@ -4,7 +4,8 @@
   "info": {
     "singularName": "article-tag",
     "pluralName": "article-tags",
-    "displayName": "Article Tag"
+    "displayName": "Article Tag",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -21,6 +22,10 @@
       "relation": "manyToMany",
       "target": "api::article.article",
       "inversedBy": "article_tags"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "name"
     }
   }
 }
