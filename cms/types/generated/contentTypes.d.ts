@@ -395,10 +395,6 @@ export interface ApiArticleTagArticleTag extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
-    roadmap_nodes: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::roadmap-node.roadmap-node'
-    >;
     slug: Schema.Attribute.UID<'name'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -457,10 +453,6 @@ export interface ApiRoadmapNodeRoadmapNode extends Struct.CollectionTypeSchema {
     draftAndPublish: true;
   };
   attributes: {
-    article_tags: Schema.Attribute.Relation<
-      'manyToMany',
-      'api::article-tag.article-tag'
-    >;
     content: Schema.Attribute.Blocks & Schema.Attribute.Required;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -473,8 +465,12 @@ export interface ApiRoadmapNodeRoadmapNode extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    roadmap_node: Schema.Attribute.Relation<
+      'oneToOne',
+      'api::roadmap-node.roadmap-node'
+    >;
     roadmap_nodes: Schema.Attribute.Relation<
-      'oneToMany',
+      'oneToOne',
       'api::roadmap-node.roadmap-node'
     >;
     slug: Schema.Attribute.UID<'title'>;

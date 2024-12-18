@@ -23,20 +23,21 @@
       "type": "blocks",
       "required": true
     },
-    "article_tags": {
-      "type": "relation",
-      "relation": "manyToMany",
-      "target": "api::article-tag.article-tag",
-      "inversedBy": "roadmap_nodes"
-    },
     "slug": {
       "type": "uid",
       "targetField": "title"
     },
+    "roadmap_node": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::roadmap-node.roadmap-node",
+      "inversedBy": "roadmap_nodes"
+    },
     "roadmap_nodes": {
       "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::roadmap-node.roadmap-node"
+      "relation": "oneToOne",
+      "target": "api::roadmap-node.roadmap-node",
+      "mappedBy": "roadmap_node"
     }
   }
 }
