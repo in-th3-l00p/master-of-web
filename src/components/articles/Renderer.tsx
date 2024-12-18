@@ -1,5 +1,5 @@
-import type {ContentArticle} from "../../lib/types.ts";
 import {BlocksRenderer} from "@strapi/blocks-react-renderer";
+import type {ContentArticle} from "../../lib/types";
 
 function Breadcrumbs({ article }: { article: ContentArticle }) {
     return (

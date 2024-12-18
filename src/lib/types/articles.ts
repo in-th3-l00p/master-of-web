@@ -1,4 +1,4 @@
-import type {BlocksContent} from "@strapi/blocks-react-renderer";
+import {BlocksContent} from "@strapi/blocks-react-renderer";
 
 export interface Article {
     title: string;

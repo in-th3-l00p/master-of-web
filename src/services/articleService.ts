@@ -1,5 +1,6 @@
 import strapi from "../lib/strapi";
-import {Article, ArticleResponse, ContentArticle} from "../lib/types";
+
+import type {Article, ArticleResponse, ContentArticle} from "../lib/types";
 
 export namespace ArticleService {
     export async function getAll(): Promise<ArticleResponse> {

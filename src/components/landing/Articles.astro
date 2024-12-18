@@ -1,7 +1,7 @@
 ---
 import Article from "./Article.astro";
-import {Article as ArticleType} from "../../lib/types";
 import {ArticleService} from "../../services/articleService";
+import {Article as ArticleType} from "../../lib/types";
 const articles = await ArticleService.getAll();
 ---
 <div class="bg-white py-24 sm:py-32" id="articles">
