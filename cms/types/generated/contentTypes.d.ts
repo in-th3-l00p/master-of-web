@@ -395,6 +395,10 @@ export interface ApiArticleTagArticleTag extends Struct.CollectionTypeSchema {
       Schema.Attribute.Required &
       Schema.Attribute.Unique;
     publishedAt: Schema.Attribute.DateTime;
+    roadmap_nodes: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::roadmap-node.roadmap-node'
+    >;
     slug: Schema.Attribute.UID<'name'>;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -433,6 +437,46 @@ export interface ApiArticleArticle extends Struct.CollectionTypeSchema {
     > &
       Schema.Attribute.Private;
     publishedAt: Schema.Attribute.DateTime;
+    slug: Schema.Attribute.UID<'title'>;
+    title: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
+export interface ApiRoadmapNodeRoadmapNode extends Struct.CollectionTypeSchema {
+  collectionName: 'roadmap_nodes';
+  info: {
+    description: '';
+    displayName: 'Roadmap Node';
+    pluralName: 'roadmap-nodes';
+    singularName: 'roadmap-node';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    article_tags: Schema.Attribute.Relation<
+      'manyToMany',
+      'api::article-tag.article-tag'
+    >;
+    content: Schema.Attribute.Blocks & Schema.Attribute.Required;
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    description: Schema.Attribute.Text;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::roadmap-node.roadmap-node'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    roadmap_nodes: Schema.Attribute.Relation<
+      'oneToMany',
+      'api::roadmap-node.roadmap-node'
+    >;
     slug: Schema.Attribute.UID<'title'>;
     title: Schema.Attribute.String & Schema.Attribute.Required;
     updatedAt: Schema.Attribute.DateTime;
@@ -950,6 +994,7 @@ declare module '@strapi/strapi' {
       'admin::user': AdminUser;
       'api::article-tag.article-tag': ApiArticleTagArticleTag;
       'api::article.article': ApiArticleArticle;
+      'api::roadmap-node.roadmap-node': ApiRoadmapNodeRoadmapNode;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::i18n.locale': PluginI18NLocale;

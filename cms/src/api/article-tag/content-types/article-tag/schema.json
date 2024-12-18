@@ -26,6 +26,12 @@
     "slug": {
       "type": "uid",
       "targetField": "name"
+    },
+    "roadmap_nodes": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::roadmap-node.roadmap-node",
+      "mappedBy": "article_tags"
     }
   }
 }

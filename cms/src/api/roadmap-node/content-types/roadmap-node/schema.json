@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "roadmap_nodes",
+  "info": {
+    "singularName": "roadmap-node",
+    "pluralName": "roadmap-nodes",
+    "displayName": "Roadmap Node",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "text"
+    },
+    "content": {
+      "type": "blocks",
+      "required": true
+    },
+    "article_tags": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::article-tag.article-tag",
+      "inversedBy": "roadmap_nodes"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
+    },
+    "roadmap_nodes": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::roadmap-node.roadmap-node"
+    }
+  }
+}
