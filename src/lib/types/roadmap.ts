@@ -5,8 +5,9 @@ export interface RoadmapNode {
     slug: string;
     title: string;
     description: string;
-    roadmap_node: { id: number; }; // parent
+    roadmap_node: { id: number; } | null; // parent
     roadmap_nodes: [{ id: number; }];
+    parent: { id: number } | null;
 }
 
 export interface ContentRoadmapNode extends RoadmapNode {

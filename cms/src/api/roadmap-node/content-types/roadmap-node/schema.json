@@ -29,15 +29,20 @@
     },
     "roadmap_node": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToOne",
       "target": "api::roadmap-node.roadmap-node",
       "inversedBy": "roadmap_nodes"
     },
     "roadmap_nodes": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "oneToMany",
       "target": "api::roadmap-node.roadmap-node",
       "mappedBy": "roadmap_node"
+    },
+    "parent": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::roadmap-node.roadmap-node"
     }
   }
 }

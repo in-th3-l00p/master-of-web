@@ -464,13 +464,17 @@ export interface ApiRoadmapNodeRoadmapNode extends Struct.CollectionTypeSchema {
       'api::roadmap-node.roadmap-node'
     > &
       Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    roadmap_node: Schema.Attribute.Relation<
+    parent: Schema.Attribute.Relation<
       'oneToOne',
       'api::roadmap-node.roadmap-node'
     >;
+    publishedAt: Schema.Attribute.DateTime;
+    roadmap_node: Schema.Attribute.Relation<
+      'manyToOne',
+      'api::roadmap-node.roadmap-node'
+    >;
     roadmap_nodes: Schema.Attribute.Relation<
-      'oneToOne',
+      'oneToMany',
       'api::roadmap-node.roadmap-node'
     >;
     slug: Schema.Attribute.UID<'title'>;

@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import {RoadmapService} from "../services/roadmapService";
+
+const graph = await RoadmapService.getGraph();
+const root = graph.nodes[graph.rootIndex];
+---
+<Layout>
+    <div class="bg-white px-6 py-24 sm:py-24 lg:px-8">
+        <div class="mx-auto max-w-2xl text-center">
+            <p class="text-base/7 font-semibold text-cyan-600">Explore the roadmap</p>
+            <h2 class="mt-2 text-5xl font-semibold tracking-tight text-gray-900 sm:text-7xl">Roadmap</h2>
+            <p class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">Walk through a step-by-step guide for mastering web development</p>
+        </div>
+    </div>
+
+    <div class="flex flex-col items-center relative gap-16">
+        <div class="bg-cyan-600 py-4 rounded-md shadow-md flex justify-center items-center w-48">
+            <p class="text-xl text-white font-bold">{root.title}</p>
+        </div>
+
+        <div class="flex justify-center items-center gap-64">
+            {graph.adj[root.id.toString()].map((index) => (
+                <div
+                    key={index}
+                    class="bg-cyan-600 w-48 py-4 rounded-md shadow-md flex justify-center items-center"
+                >
+                    <p class="text-xl text-white font-bold">{graph.nodes[index].title}</p>
+                </div>
+            ))}
+        </div>
+    </div>
+</Layout>
